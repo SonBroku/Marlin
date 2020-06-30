@@ -1623,9 +1623,9 @@
 #if EITHER(MESH_BED_LEVELING, AUTO_BED_LEVELING_UBL)
   // Override the mesh area if the automatic (max) area is too large
   #define MESH_MIN_X 0
-  #define MESH_MIN_Y 41.24
+  #define MESH_MIN_Y 22
   #define MESH_MAX_X 235
-  #define MESH_MAX_Y Y_BED_SIZE - 41.24
+  #define MESH_MAX_Y Y_BED_SIZE - 22
 #endif
 
 /**

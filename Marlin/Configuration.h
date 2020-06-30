@@ -980,7 +980,7 @@
  *
  * Specify a Probe position as { X, Y, Z }
  */
-#define NOZZLE_TO_PROBE_OFFSET { -41.24, -6.25, -0.95 }
+#define NOZZLE_TO_PROBE_OFFSET { -41.24, -6.25, -0.98 }
 
 // Certain types of probes need to stay away from edges
 #define PROBING_MARGIN 0
@@ -1099,7 +1099,7 @@
 
 //#define UNKNOWN_Z_NO_RAISE // Don't raise Z (lower the bed) if Z is "unknown." For beds that fall when Z is powered off.
 
-#define Z_HOMING_HEIGHT 5  // (mm) Minimal Z height before homing (G28) for Z clearance above the bed, clamps, ...
+#define Z_HOMING_HEIGHT 10  // (mm) Minimal Z height before homing (G28) for Z clearance above the bed, clamps, ...
                              // Be sure you have this distance over your Z_MAX_POS in case.
 
 //#define Z_AFTER_HOMING  5     // (mm) Height to move to after homing Z
