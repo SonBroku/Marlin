@@ -16,7 +16,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
 
@@ -61,6 +61,9 @@ void host_action(PGM_P const pstr, const bool eol) {
 #endif
 #ifdef ACTION_ON_CANCEL
   void host_action_cancel() { host_action(PSTR(ACTION_ON_CANCEL)); }
+#endif
+#ifdef ACTION_ON_START
+  void host_action_start() { host_action(PSTR(ACTION_ON_START)); }
 #endif
 
 #if ENABLED(HOST_PROMPT_SUPPORT)

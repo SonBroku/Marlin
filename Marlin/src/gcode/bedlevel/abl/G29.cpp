@@ -16,7 +16,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
 
@@ -61,7 +61,7 @@
 #endif
 
 #if ENABLED(DWIN_CREALITY_LCD)
-  #include "../../../lcd/dwin/dwin.h"
+  #include "../../../lcd/dwin/e3v2/dwin.h"
 #endif
 
 #if HAS_MULTI_HOTEND
@@ -160,7 +160,6 @@
  *  E  By default G29 will engage the Z probe, test the bed, then disengage.
  *     Include "E" to engage/disengage the Z probe for each sample.
  *     There's no extra effect if you have a fixed Z probe.
- *
  */
 G29_TYPE GcodeSuite::G29() {
 
@@ -183,7 +182,7 @@ G29_TYPE GcodeSuite::G29() {
               faux = ENABLED(DEBUG_LEVELING_FEATURE) && DISABLED(PROBE_MANUALLY) ? parser.boolval('C') : no_action;
 
   // Don't allow auto-leveling without homing first
-  if (axis_unhomed_error()) G29_RETURN(false);
+  if (homing_needed_error()) G29_RETURN(false);
 
   if (!no_action && planner.leveling_active && parser.boolval('O')) { // Auto-level only if needed
     if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPGM("> Auto-level not needed, skip");
