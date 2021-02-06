@@ -139,10 +139,34 @@
   //#define HEATER_CHAMBER_INVERTING false
 #endif
 
+<<<<<<< Updated upstream
 #if DISABLED(PIDTEMPBED)
   #define BED_CHECK_INTERVAL 5000 // ms between checks in bang-bang control
   #if ENABLED(BED_LIMIT_SWITCHING)
     #define BED_HYSTERESIS 2 // Only disable heating if T>target+BED_HYSTERESIS and enable heating if T>target-BED_HYSTERESIS
+=======
+  //#define CHAMBER_FAN               // Enable a fan on the chamber
+  #if ENABLED(CHAMBER_FAN)
+    #define CHAMBER_FAN_MODE 2        // Fan control mode: 0=Static; 1=Linear increase when temp is higher than target; 2=V-shaped curve.
+    #if CHAMBER_FAN_MODE == 0
+      #define CHAMBER_FAN_BASE  255   // Chamber fan PWM (0-255)
+    #elif CHAMBER_FAN_MODE == 1
+      #define CHAMBER_FAN_BASE  128   // Base chamber fan PWM (0-255); turns on when chamber temperature is above the target
+      #define CHAMBER_FAN_FACTOR 25   // PWM increase per °C above target
+    #elif CHAMBER_FAN_MODE == 2
+      #define CHAMBER_FAN_BASE  128   // Minimum chamber fan PWM (0-255)
+      #define CHAMBER_FAN_FACTOR 25   // PWM increase per °C difference from target
+    #endif
+  #endif
+
+  //#define CHAMBER_VENT              // Enable a servo-controlled vent on the chamber
+  #if ENABLED(CHAMBER_VENT)
+    #define CHAMBER_VENT_SERVO_NR  1  // Index of the vent servo
+    #define HIGH_EXCESS_HEAT_LIMIT 5  // How much above target temp to consider there is excess heat in the chamber
+    #define LOW_EXCESS_HEAT_LIMIT 3
+    #define MIN_COOLING_SLOPE_TIME_CHAMBER_VENT 20
+    #define MIN_COOLING_SLOPE_DEG_CHAMBER_VENT 1.5
+>>>>>>> Stashed changes
   #endif
 #endif
 
@@ -785,6 +809,12 @@
 
   // Enable to restore leveling setup after operation
   #define RESTORE_LEVELING_AFTER_G35
+<<<<<<< Updated upstream
+=======
+
+  // Add a menu item for Assisted Tramming
+  //#define ASSISTED_TRAMMING_MENU_ITEM
+>>>>>>> Stashed changes
 
   /**
    * Screw thread:
@@ -822,6 +852,13 @@
 #define DEFAULT_MINTRAVELFEEDRATE     0.0
 
 //#define HOME_AFTER_DEACTIVATE  // Require rehoming after steppers are deactivated
+<<<<<<< Updated upstream
+=======
+
+// Default Minimum Feedrates for printing and travel moves
+#define DEFAULT_MINIMUMFEEDRATE       0.0     // (mm/s) Minimum feedrate. Set with M205 S.
+#define DEFAULT_MINTRAVELFEEDRATE     0.0     // (mm/s) Minimum travel feedrate. Set with M205 T.
+>>>>>>> Stashed changes
 
 // Minimum time that a segment needs to take if the buffer is emptied
 #define DEFAULT_MINSEGMENTTIME        20000   // (µs)
@@ -1016,7 +1053,11 @@
 // @section lcd
 
 #if EITHER(ULTIPANEL, EXTENSIBLE_UI)
+<<<<<<< Updated upstream
   #define MANUAL_FEEDRATE { 50*60, 50*60, 4*60, 2*60 } // Feedrates for manual moves along X, Y, Z, E from panel
+=======
+  #define MANUAL_FEEDRATE { 50*60, 50*60, 4*60, 2*60 } // (mm/min) Feedrates for manual moves along X, Y, Z, E from panel
+>>>>>>> Stashed changes
   #define SHORT_MANUAL_Z_MOVE 0.025 // (mm) Smallest manual Z move (< 0.1mm)
   #if ENABLED(ULTIPANEL)
     #define MANUAL_E_MOVES_RELATIVE // Display extruder move distance rather than "position"
@@ -1040,6 +1081,17 @@
 
 #if HAS_LCD_MENU
 
+<<<<<<< Updated upstream
+=======
+  // Add Probe Z Offset calibration to the Z Probe Offsets menu
+  #if HAS_BED_PROBE
+    //#define PROBE_OFFSET_WIZARD
+    #if ENABLED(PROBE_OFFSET_WIZARD)
+      #define PROBE_OFFSET_START -4.0   // Estimated nozzle-to-probe Z offset, plus a little extra
+    #endif
+  #endif
+
+>>>>>>> Stashed changes
   // Include a page of printer information in the LCD Main Menu
   #define LCD_INFO_MENU
   #if ENABLED(LCD_INFO_MENU)
@@ -1087,12 +1139,24 @@
   #define BOOTSCREEN_TIMEOUT 4000        // (ms) Total Duration to display the boot screen(s)
 #endif
 
+<<<<<<< Updated upstream
 #if HAS_GRAPHICAL_LCD && EITHER(SDSUPPORT, LCD_SET_PROGRESS_MANUALLY)
   #define PRINT_PROGRESS_SHOW_DECIMALS // Show progress with decimal digits
   #define SHOW_REMAINING_TIME          // Display estimated time to completion
   #if ENABLED(SHOW_REMAINING_TIME)
     //#define USE_M73_REMAINING_TIME     // Use remaining time from M73 command instead of estimation
     #define ROTATE_PROGRESS_DISPLAY    // Display (P)rogress, (E)lapsed, and (R)emaining time
+=======
+#if EITHER(SDSUPPORT, LCD_SET_PROGRESS_MANUALLY) && ANY(HAS_MARLINUI_U8GLIB, HAS_MARLINUI_HD44780, IS_TFTGLCD_PANEL)
+  //#define SHOW_REMAINING_TIME       // Display estimated time to completion
+  #if ENABLED(SHOW_REMAINING_TIME)
+    //#define USE_M73_REMAINING_TIME  // Use remaining time from M73 command instead of estimation
+    //#define ROTATE_PROGRESS_DISPLAY // Display (P)rogress, (E)lapsed, and (R)emaining time
+  #endif
+
+  #if HAS_MARLINUI_U8GLIB
+    //#define PRINT_PROGRESS_SHOW_DECIMALS // Show progress with decimal digits
+>>>>>>> Stashed changes
   #endif
 #endif
 
@@ -1130,7 +1194,11 @@
 
   //#define MENU_ADDAUTOSTART               // Add a menu option to run auto#.g files
 
+<<<<<<< Updated upstream
   #define EVENT_GCODE_SD_STOP "G28XY"       // G-code to run on Stop Print (e.g., "G28XY" or "G27")
+=======
+  #define EVENT_GCODE_SD_ABORT "G28XY"      // G-code to run on SD Abort Print (e.g., "G28XY" or "G27")
+>>>>>>> Stashed changes
 
   #if ENABLED(PRINTER_EVENT_LEDS)
     #define PE_LEDS_COMPLETED_TIME  (30*60) // (seconds) Time to keep the LED "done" color before restoring normal illumination
@@ -1378,7 +1446,48 @@
   //#define MARLIN_SNAKE
   //#define GAMES_EASTER_EGG          // Add extra blank lines above the "Games" sub-menu
 
+<<<<<<< Updated upstream
 #endif // HAS_GRAPHICAL_LCD
+=======
+#endif // HAS_MARLINUI_U8GLIB
+
+//
+// Additional options for DGUS / DWIN displays
+//
+#if HAS_DGUS_LCD
+  #define LCD_SERIAL_PORT 3
+  #define LCD_BAUDRATE 115200
+
+  #define DGUS_RX_BUFFER_SIZE 128
+  #define DGUS_TX_BUFFER_SIZE 48
+  //#define SERIAL_STATS_RX_BUFFER_OVERRUNS  // Fix Rx overrun situation (Currently only for AVR)
+
+  #define DGUS_UPDATE_INTERVAL_MS  500    // (ms) Interval between automatic screen updates
+
+  #if EITHER(DGUS_LCD_UI_FYSETC, DGUS_LCD_UI_HIPRECY)
+    #define DGUS_PRINT_FILENAME           // Display the filename during printing
+    #define DGUS_PREHEAT_UI               // Display a preheat screen during heatup
+
+    #if ENABLED(DGUS_LCD_UI_FYSETC)
+      //#define DGUS_UI_MOVE_DIS_OPTION   // Disabled by default for UI_FYSETC
+    #else
+      #define DGUS_UI_MOVE_DIS_OPTION     // Enabled by default for UI_HIPRECY
+    #endif
+
+    #define DGUS_FILAMENT_LOADUNLOAD
+    #if ENABLED(DGUS_FILAMENT_LOADUNLOAD)
+      #define DGUS_FILAMENT_PURGE_LENGTH 10
+      #define DGUS_FILAMENT_LOAD_LENGTH_PER_TIME 0.5 // (mm) Adjust in proportion to DGUS_UPDATE_INTERVAL_MS
+    #endif
+
+    #define DGUS_UI_WAITING               // Show a "waiting" screen between some screens
+    #if ENABLED(DGUS_UI_WAITING)
+      #define DGUS_UI_WAITING_STATUS 10
+      #define DGUS_UI_WAITING_STATUS_PERIOD 8 // Increase to slower waiting status looping
+    #endif
+  #endif
+#endif // HAS_DGUS_LCD
+>>>>>>> Stashed changes
 
 //
 // Touch UI for the FTDI Embedded Video Engine (EVE)
@@ -1508,9 +1617,16 @@
 #endif
 
 //
+<<<<<<< Updated upstream
 // FSMC Graphical TFT
 //
 #if ENABLED(FSMC_GRAPHICAL_TFT)
+=======
+// FSMC / SPI Graphical TFT
+//
+#if TFT_SCALED_DOGLCD
+  //#define GRAPHICAL_TFT_ROTATE_180
+>>>>>>> Stashed changes
   //#define TFT_MARLINUI_COLOR 0xFFFF // White
   //#define TFT_MARLINBG_COLOR 0x0000 // Black
   //#define TFT_DISABLED_COLOR 0x0003 // Almost black
@@ -2485,7 +2601,7 @@
    * Poll the driver through SPI to determine load when homing.
    * Removes the need for a wire from DIAG1 to an endstop pin.
    *
-   * IMPROVE_HOMING_RELIABILITY tunes acceleration and jerk when
+   * IMPROVE_HOMING_RELIABILITY tunes acceleration and 6 when
    * homing and adds a guard period for endstop triggering.
    */
   //#define SENSORLESS_HOMING // StallGuard capable drivers only
@@ -3276,6 +3392,10 @@
   #define JOY_X_LIMITS { 5600, 8190-100, 8190+100, 10800 } // min, deadzone start, deadzone end, max
   #define JOY_Y_LIMITS { 5600, 8250-100, 8250+100, 11000 }
   #define JOY_Z_LIMITS { 4800, 8080-100, 8080+100, 11550 }
+<<<<<<< Updated upstream
+=======
+  //#define JOYSTICK_DEBUG
+>>>>>>> Stashed changes
 #endif
 
 /**
@@ -3347,16 +3467,27 @@
 #endif
 
 /**
+<<<<<<< Updated upstream
  * Prusa Multi-Material Unit v2
+=======
+ * Průša Multi-Material Unit v2
+>>>>>>> Stashed changes
  * Enable in Configuration.h
  */
 #if ENABLED(PRUSA_MMU2)
 
   // Serial port used for communication with MMU2.
+<<<<<<< Updated upstream
   // For AVR enable the UART port used for the MMU. (e.g., internalSerial)
   // For 32-bit boards check your HAL for available serial ports. (e.g., Serial2)
   #define INTERNAL_SERIAL_PORT 2
   #define MMU2_SERIAL internalSerial
+=======
+  // For AVR enable the UART port used for the MMU. (e.g., mmuSerial)
+  // For 32-bit boards check your HAL for available serial ports. (e.g., Serial2)
+  #define MMU2_SERIAL_PORT 2
+  #define MMU2_SERIAL mmuSerial
+>>>>>>> Stashed changes
 
   // Use hardware reset for MMU if a pin is defined for it
   //#define MMU2_RST_PIN 23
@@ -3396,15 +3527,30 @@
 
   /**
    * MMU Extruder Sensor
+<<<<<<< Updated upstream
    * Add support for Prusa IR Sensor (or other) to detect that filament reach the extruder to make loading filament more reliable
    * If your extruder is equipped with a filament sensor located less than 38mm from the gears you can use this feature
    * During loading to the extruder, the sensor will stop the loading command when he's triggered and make a last move to load filament to the gears
    * If no filament is detected, MMU2 will make more loading attemps, if finally no filament is detected, the printer will enter in runout state
+=======
+   *
+   * Support for a Průša (or other) IR Sensor to detect filament near the extruder
+   * and make loading more reliable. Suitable for an extruder equipped with a filament
+   * sensor less than 38mm from the gears.
+   *
+   * During loading the extruder will stop when the sensor is triggered, then do a last
+   * move up to the gears. If no filament is detected, the MMU2 can make some more attempts.
+   * If all attempts fail, a filament runout will be triggered.
+>>>>>>> Stashed changes
    */
 
   //#define MMU_EXTRUDER_SENSOR
   #if ENABLED(MMU_EXTRUDER_SENSOR)
+<<<<<<< Updated upstream
     #define MMU_LOADING_ATTEMPTS_NR 5 //max. number of attempts to load filament if first load fail
+=======
+    #define MMU_LOADING_ATTEMPTS_NR 5 // max. number of attempts to load filament if first load fail
+>>>>>>> Stashed changes
   #endif
 
   /**
