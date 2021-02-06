@@ -16,12 +16,12 @@
  *   GNU General Public License for more details.                           *
  *                                                                          *
  *   To view a copy of the GNU General Public License, go to the following  *
- *   location: <https://www.gnu.org/licenses/>.                              *
+ *   location: <https://www.gnu.org/licenses/>.                             *
  ****************************************************************************/
 
 #include "ftdi_extended.h"
 
-#ifdef FTDI_EXTENDED
+#if ENABLED(FTDI_EXTENDED)
 
 /********************** VIRTUAL DISPATCH DATA TYPE  ******************************/
 
@@ -43,8 +43,7 @@ void ScreenRef::setScreen(onRedraw_func_t onRedraw_ptr) {
   if (type != 0xFF) {
     setType(type);
     #if ENABLED(TOUCH_UI_DEBUG)
-      SERIAL_ECHO_START();
-      SERIAL_ECHOLNPAIR("New screen: ", type);
+      SERIAL_ECHO_MSG("New screen: ", int(type));
     #endif
   }
 }
